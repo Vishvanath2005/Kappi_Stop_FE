@@ -47,6 +47,7 @@ const Login = () => {
           </label>
           <button
             type="submit"
+            onClick={()=>{navigate(`/dashboard`)}}
             className="cursor-pointer text-white bg-layout-text text-center w-full py-2 my-3 rounded-md text-lg font-semibold transition duration-200"
           >
             Login
