@@ -4,10 +4,10 @@ import { NavLink, Outlet, useLocation } from "react-router";
 import { RiDashboardLine, RiUserAddLine } from "react-icons/ri";
 import { TbBuildingStore, TbReportAnalytics } from "react-icons/tb";
 import { FaRegRectangleList } from "react-icons/fa6";
-import { Settings, Wallet } from "lucide-react";
+import { Plus, Settings, Triangle, Wallet } from "lucide-react";
 import { FaStackOverflow } from "react-icons/fa";
 import { GrGroup, GrRestaurant } from "react-icons/gr";
-import { File, AlertTriangle, Clipboard, DollarSign } from "lucide-react";
+import { File, Clipboard, DollarSign } from "lucide-react";
 
 const Layouts = () => {
   const location = useLocation();
@@ -23,10 +23,10 @@ const Layouts = () => {
       icon: (
         <div className="relative w-6 h-6">
           <File className="absolute w-6 h-6" />
-          <AlertTriangle className="absolute left-1.5 top-2 w-3 h-3" />
+          <Plus className="absolute left-1.5 top-2 w-3 h-3" />
         </div>
       ),
-      to: "/usermanagement",
+      to: "/user_management",
     },
     {
       title: "Store Management",
