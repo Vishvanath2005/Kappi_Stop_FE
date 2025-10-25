@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Auth_Screens from "../../components/auth_component/Auth_Screens";
 import Auth_Inputs from "../../components/auth_component/Auth_Inputs";
+import { Navigate, useNavigate } from "react-router";
 
 const Login = () => {
   const [LoginData, setLoginData] = useState({ email: "", password: "" });
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login details:", LoginData);
@@ -33,7 +34,12 @@ const Login = () => {
             }
             value={LoginData.password}
           />
-          <p className="text-right text-sm cursor-pointer hover:underline">
+          <p
+            className="text-right text-sm cursor-pointer hover:underline"
+            onClick={() => {
+              navigate(`/forgot_password`);
+            }}
+          >
             Forgot Password?
           </p>
           <label className="px-1.5 space-y-3 my-5">
