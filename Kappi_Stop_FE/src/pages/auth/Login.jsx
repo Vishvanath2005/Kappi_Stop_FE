@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Auth_Screens from "../../components/auth_component/Auth_Screens";
 import Auth_Inputs from "../../components/auth_component/Auth_Inputs";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [LoginData, setLoginData] = useState({ email: "", password: "" });

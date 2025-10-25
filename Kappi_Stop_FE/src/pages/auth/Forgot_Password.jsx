@@ -8,7 +8,7 @@ const Forgot_Password = () => {
   return (
     <div>
       <Auth_Screens
-        auth_title="Forgot Password"
+        auth_title="Forgot Password?"
         auth_body={
           <>
             <Auth_Inputs
@@ -18,6 +18,9 @@ const Forgot_Password = () => {
             />
             <button
               type="submit"
+               onClick={() => {
+                navigate(`/reset_password`);
+              }}
               className="cursor-pointer text-white bg-layout-text text-center w-full py-2 my-3 rounded-md text-lg font-semibold transition duration-200"
             >
               Send Email
