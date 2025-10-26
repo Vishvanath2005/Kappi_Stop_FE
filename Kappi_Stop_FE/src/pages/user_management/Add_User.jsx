@@ -14,7 +14,7 @@ const schema = yup.object().shape({
   wallet_balance: yup.string().required("Wallet Balance is required"),
 });
 
-const AddUser = ({ onClose }) => {
+const Add_User = ({ onClose }) => {
   const {
     register,
     handleSubmit,
@@ -95,4 +95,4 @@ const AddUser = ({ onClose }) => {
   );
 };
 
-export default AddUser;
+export default Add_User;

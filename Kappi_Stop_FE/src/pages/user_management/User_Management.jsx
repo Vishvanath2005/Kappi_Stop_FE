@@ -2,6 +2,7 @@ import React from "react";
 import { Plus } from "lucide-react";
 import Table from "../../components/Table";
 import Add_User from "./Add_User";
+import Edit_User from "./Edit_User";
 
 const User_Management = () => {
   const userColumns = [
@@ -9,8 +10,8 @@ const User_Management = () => {
     { key: "name", label: "Name" },
     { key: "phone", label: "Phone Number" },
     { key: "email", label: "Email" },
-    { key: "wallet", label: "Wallet Balance" },
-    { key: "membership", label: "Membership Type" },
+    { key: "wallet_balance", label: "Wallet Balance" },
+    { key: "membership_type", label: "Membership Type" },
     { key: "status", label: "Status" },
   ];
 
@@ -20,8 +21,8 @@ const User_Management = () => {
       name: "Aarnav",
       phone: "00000 00000",
       email: "sophia.clark@email.com",
-      wallet: "$500",
-      membership: "Premium",
+      wallet_balance: "$500",
+      membership_type: "Premium",
       status: "Active",
     },
     {
@@ -29,8 +30,8 @@ const User_Management = () => {
       name: "Sophia",
       phone: "99999 88888",
       email: "sophia@email.com",
-      wallet: "$650",
-      membership: "Premium",
+      wallet_balance: "$650",
+      membership_type: "Premium",
       status: "Blocked",
     },
     {
@@ -38,8 +39,8 @@ const User_Management = () => {
       name: "Aarnav",
       phone: "00000 00000",
       email: "sophia.clark@email.com",
-      wallet: "$500",
-      membership: "Premium",
+      wallet_balance: "$500",
+      membership_type: "Premium",
       status: "Active",
     },
     {
@@ -47,8 +48,8 @@ const User_Management = () => {
       name: "Liam",
       phone: "90000 55555",
       email: "liam.patel@email.com",
-      wallet: "$500",
-      membership: "Premium",
+      wallet_balance: "$500",
+      membership_type: "Premium",
       status: "Active",
     },
     {
@@ -56,8 +57,8 @@ const User_Management = () => {
       name: "Ethan",
       phone: "98765 43210",
       email: "ethan.jones@email.com",
-      wallet: "$300",
-      membership: "Basic",
+      wallet_balance: "$300",
+      membership_type: "Basic",
       status: "Blocked",
     },
     {
@@ -65,8 +66,8 @@ const User_Management = () => {
       name: "Aarnav",
       phone: "00000 00000",
       email: "sophia.clark@email.com",
-      wallet: "$500",
-      membership: "Premium",
+      wallet_balance: "$500",
+      membership_type: "Premium",
       status: "Active",
     },
     {
@@ -74,8 +75,8 @@ const User_Management = () => {
       name: "Liam",
       phone: "90000 55555",
       email: "liam.patel@email.com",
-      wallet: "$500",
-      membership: "Premium",
+      wallet_balance: "$500",
+      membership_type: "Premium",
       status: "Active",
     },
     {
@@ -83,8 +84,8 @@ const User_Management = () => {
       name: "Olivia",
       phone: "98700 11111",
       email: "olivia.ross@email.com",
-      wallet: "$700",
-      membership: "Premium",
+      wallet_balance: "$700",
+      membership_type: "Premium",
       status: "Active",
     },
     {
@@ -92,8 +93,8 @@ const User_Management = () => {
       name: "Aarnav",
       phone: "00000 00000",
       email: "sophia.clark@email.com",
-      wallet: "$500",
-      membership: "Premium",
+      wallet_balance: "$500",
+      membership_type: "Premium",
       status: "Active",
     },
     {
@@ -101,8 +102,8 @@ const User_Management = () => {
       name: "Liam",
       phone: "90000 55555",
       email: "liam.patel@email.com",
-      wallet: "$500",
-      membership: "Premium",
+      wallet_balance: "$500",
+      membership_type: "Premium",
       status: "Active",
     },
   ];
@@ -115,9 +116,9 @@ const User_Management = () => {
         add_button="Add User"
         columns={userColumns}
         data={userData}
-        ViewRoute="/employee/view"
-        EditModal={true} 
-        AddModal={Add_User} 
+        ViewRoute="/user_management/view_user_management"
+        EditModal={Edit_User}
+        AddModal={Add_User}
         itemsPerPage={9}
       />
     </div>

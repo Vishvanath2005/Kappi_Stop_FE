@@ -103,7 +103,7 @@ const Table = ({
             button_icon={<BiFilterAlt size={22} />}
             button_name="Filter"
             bgColor="bg-white"
-            textColor="text-dark-brown"
+            textColor="text-layout-text"
             paddingX="px-4"
           />
         </div>

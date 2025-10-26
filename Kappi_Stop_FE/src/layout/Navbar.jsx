@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <div className=" w-full z-10 font-roboto-flex flex justify-between items-center bg-white p-2 h-20 ">
+    <div className=" w-full z-10 font-roboto-flex flex justify-between drop-shadow-xs items-center bg-white p-2 h-20 ">
       <div className="flex items-center gap-5  ">
         <img src={LOGO} className="w-20 h-20 ml-7  " alt="Logo Image" />
         <div className="flex items-center gap-3 px-5  rounded-md w-[290px] sm:w-[290px] bg-background drop-shadow-sm">
