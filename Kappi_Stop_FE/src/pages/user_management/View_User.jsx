@@ -1,5 +1,6 @@
 import React from "react";
 import { MdOutlineBlock } from "react-icons/md";
+import { CgUnblock } from "react-icons/cg";
 import { useLocation } from "react-router";
 import View_Page from "../../components/View_Page";
 import Block_User from "./Block_User";
@@ -22,7 +23,13 @@ const View_User = () => {
     <View_Page
       title="User Management"
       status_name={user?.status === "Active" ? "Blocked" : "Active"}
-      icon_name={<MdOutlineBlock size={22} />}
+      icon_name={
+        user.status === "Active" ? (
+          <MdOutlineBlock size={22} />
+        ) : (
+          <CgUnblock size={22} />
+        )
+      }
       button_color={`${
         user.status === "Active" ? "bg-layout-text" : "bg-white"
       }`}
