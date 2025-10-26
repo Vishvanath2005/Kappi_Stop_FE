@@ -2,11 +2,11 @@ import React from "react";
 import { MdOutlineBlock } from "react-icons/md";
 import { useLocation } from "react-router";
 import View_Page from "../../components/View_Page";
+import Block_User from "./Block_User";
 
 const View_User = () => {
   const { state } = useLocation();
   const user = state?.item || {};
-  console.log(user);
 
   const userColumns = [
     { key: "userId", label: "User ID" },
@@ -24,13 +24,14 @@ const View_User = () => {
       status_name={user?.status === "Active" ? "Blocked" : "Active"}
       icon_name={<MdOutlineBlock size={22} />}
       button_color={`${
-        user.status === "Active" ? ` bg-layout-text` : `bg-white`
+        user.status === "Active" ? "bg-layout-text" : "bg-white"
       }`}
       button_text_color={`${
-        user.status === "Active" ? ` text-white` : `text-layout-text`
+        user.status === "Active" ? "text-white" : "text-layout-text"
       }`}
       columns={userColumns}
       data={user}
+      StatusModal={Block_User}
     />
   );
 };

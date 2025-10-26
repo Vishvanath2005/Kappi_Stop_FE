@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router";
 import { TiArrowBack } from "react-icons/ti";
@@ -11,23 +11,31 @@ const View_Page = ({
   button_text_color,
   columns = [],
   data = {},
+  StatusModal,
 }) => {
   const navigate = useNavigate();
+  const [showStatus, setShowStatus] = useState(false);
 
   const getStatusColor = (value) => {
-    const status = String(value || "").toLowerCase();
-    if (status === "active" || status === "complete") return "text-green-500";
-    if (status === "inactive" || status === "blocked") return "text-red-500";
+    const status = String(value || "");
+    if (status === "Active" || status === "Complete") return "text-green-500";
+    if (status === "Inactive" || status === "Blocked") return "text-red-500";
     return "text-gray-500";
   };
 
+  const handleStatusClick = () => {
+    if (data.status === "Active") {
+      setShowStatus(true);
+    }
+  };
+
   return (
-    <div className="relative w-full h-full ">
+    <div className="relative w-full h-full">
       <div className="flex sm:justify-between space-y-2 mb-2 sm:items-center flex-col sm:flex-row">
         <div className="text-layout-text">
           <p className="font-roboto-flex text-sm flex">
             <span className="pr-1">{title}</span>
-            <span> / View {title}</span>
+            <span>/ View {title}</span>
           </p>
           <p className="text-2xl font-semibold font-roboto-flex">{title}</p>
         </div>
@@ -39,6 +47,7 @@ const View_Page = ({
             bgColor={button_color}
             textColor={button_text_color}
             paddingX="px-4"
+            onClick={handleStatusClick}
           />
         </div>
       </div>
@@ -51,7 +60,7 @@ const View_Page = ({
         <div className="grid grid-cols-7 p-4 gap-y-1 text-sm">
           {columns.map((col, index) => {
             const value = data?.[col.key] ?? "—";
-            const isStatus = col.label.toLowerCase() === "status";
+            const isStatus = col.label === "Status";
             const textColor = isStatus
               ? getStatusColor(value)
               : "text-gray-500";
@@ -67,7 +76,6 @@ const View_Page = ({
           })}
         </div>
       </div>
-
       <div className="absolute bottom-2 right-0">
         <Button
           button_icon={<TiArrowBack size={22} />}
@@ -78,6 +86,10 @@ const View_Page = ({
           onClick={() => navigate(-1)}
         />
       </div>
+
+      {showStatus && StatusModal && (
+        <StatusModal onClose={() => setShowStatus(false)} item={data} />
+      )}
     </div>
   );
 };
