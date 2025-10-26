@@ -4,6 +4,7 @@ import Auth_Route from "./Auth_Route";
 import Layouts from "../layout/Layouts";
 import Dashboard_Route from "./Dashboard_Route";
 import User_Route from "./User_Route";
+import Report_Route from "./Report_Route";
 
 const Main_Router = () => {
   return (
@@ -14,6 +15,7 @@ const Main_Router = () => {
           <Route element={<Layouts />}>
             {Dashboard_Route()}
             {User_Route()}
+            {Report_Route()}
           </Route>
         </Routes>
       </BrowserRouter>

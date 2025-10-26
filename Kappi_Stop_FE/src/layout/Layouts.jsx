@@ -66,7 +66,7 @@ const Layouts = () => {
     {
       title: "Reports",
       icon: <TbReportAnalytics size={27} />,
-      to: "/reports",
+      to: "/report",
     },
     {
       title: "Settings",
