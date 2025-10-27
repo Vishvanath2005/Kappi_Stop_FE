@@ -158,14 +158,14 @@ const Table = ({
             </tr>
           </thead>
 
-          <tbody className="text-grey bg-white text-sm font-light drop-shadow-sm">
+          <tbody className=" bg-white text-sm font-light drop-shadow-sm">
             {currentItems.length > 0 ? (
               currentItems.map((item, index) => (
                 <tr
                   key={index}
-                  className="border-b-[3px] border-background text-center"
+                  className="border-b-[3px] text-gray-500 border-background text-center"
                 >
-                  <td className="p-3.5 rounded-l-lg">
+                  <td className="p-3.5  rounded-l-lg">
                     {indexOfFirstItem + index + 1}
                   </td>
                   {columns.map((col, colIndex) => {
