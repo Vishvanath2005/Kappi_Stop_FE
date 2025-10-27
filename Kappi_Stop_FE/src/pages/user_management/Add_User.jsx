@@ -6,7 +6,6 @@ import * as yup from "yup";
 import Modal from "../../components/Modal";
 import { InputField } from "../../components/InputField";
 
-// Validation schema using Yup
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   phone: yup.string().required("Phone Number is required"),

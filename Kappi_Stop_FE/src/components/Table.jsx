@@ -11,6 +11,7 @@ import Button from "./Button";
 
 const Table = ({
   title,
+  setting_title=false,
   add_icon,
   add_button,
   columns = [],
@@ -18,7 +19,7 @@ const Table = ({
   showActions = true,
   ViewRoute = false,
   EditModal = null,
-  AddModal=null ,
+  AddModal = null,
   itemsPerPage = 9,
 }) => {
   const navigate = useNavigate();
@@ -75,13 +76,25 @@ const Table = ({
   return (
     <>
       <div className="flex sm:justify-between space-y-2 sm:items-center mb-4 flex-col sm:flex-row">
-        <div className="text-layout-text">
-          <p className="font-roboto-flex text-sm">{title}</p>
-          <p className="text-2xl font-semibold font-roboto-flex">{title}</p>
-        </div>
+        {title && (
+          <div className="text-layout-text">
+            <p className="font-roboto-flex text-sm">{title}</p>
+            <p className="text-2xl font-semibold font-roboto-flex">{title}</p>
+          </div>
+        )}
+
+        {setting_title && (
+          <div className="font-roboto-flex flex flex-col ">
+            <p className=" space-x-1">
+             <span> Settings</span>
+              <span>/ {setting_title}</span>
+            </p>
+            <p className="text-xl  font-semibold ">{setting_title}</p>
+          </div>
+        )}
 
         <div className="flex items-center space-x-2">
-          {AddModal &&  (
+          {AddModal && (
             <Button
               button_icon={add_icon}
               button_name={add_button}
@@ -118,7 +131,9 @@ const Table = ({
                 return (
                   <th
                     key={col.key}
-                    className={`p-3.5 cursor-pointer ${addRightRadius ? "rounded-r-lg" : ""}`}
+                    className={`p-3.5 cursor-pointer ${
+                      addRightRadius ? "rounded-r-lg" : ""
+                    }`}
                     onClick={() => handleSort(col.key)}
                   >
                     <div className="flex items-center justify-center gap-2">
@@ -126,7 +141,8 @@ const Table = ({
                       <HiArrowsUpDown
                         size={18}
                         className={`transition-transform ${
-                          sortConfig.key === col.key && sortConfig.direction === "asc"
+                          sortConfig.key === col.key &&
+                          sortConfig.direction === "asc"
                             ? "rotate-180"
                             : ""
                         }`}
@@ -135,15 +151,22 @@ const Table = ({
                   </th>
                 );
               })}
-              {showActions && <th className="pr-2 text-center rounded-r-lg">Action</th>}
+              {showActions && (
+                <th className="pr-2 text-center rounded-r-lg">Action</th>
+              )}
             </tr>
           </thead>
 
           <tbody className="text-grey bg-white text-sm font-light drop-shadow-sm">
             {currentItems.length > 0 ? (
               currentItems.map((item, index) => (
-                <tr key={index} className="border-b-[3px] border-background text-center">
-                  <td className="p-3.5 rounded-l-lg">{indexOfFirstItem + index + 1}</td>
+                <tr
+                  key={index}
+                  className="border-b-[3px] border-background text-center"
+                >
+                  <td className="p-3.5 rounded-l-lg">
+                    {indexOfFirstItem + index + 1}
+                  </td>
                   {columns.map((col, colIndex) => {
                     const value = item[col.key] ?? "-";
                     const isStatus = col.key.toLowerCase() === "status";
@@ -152,7 +175,9 @@ const Table = ({
                         {isStatus ? (
                           <span
                             className={
-                              value === "Active" || value === "Available" || value === "Completed"
+                              value === "Active" ||
+                              value === "Available" ||
+                              value === "Completed"
                                 ? "text-green-600 font-bold"
                                 : "text-red-600 font-bold"
                             }
@@ -181,7 +206,9 @@ const Table = ({
                         )}
                         {ViewRoute && (
                           <button
-                            onClick={() => navigate(ViewRoute, { state: { item } })}
+                            onClick={() =>
+                              navigate(ViewRoute, { state: { item } })
+                            }
                             className="cursor-pointer bg-[#BAFFBA] p-1.5 rounded"
                           >
                             <LuEye size={14} className="text-green-700" />
@@ -213,14 +240,22 @@ const Table = ({
         </div>
         <div className="flex items-center justify-center gap-4 pr-3">
           <button
-            className={`${currentPage === 1 ? "text-darkest-blue opacity-70 cursor-not-allowed" : "text-darkest-blue"}`}
+            className={`${
+              currentPage === 1
+                ? "text-darkest-blue opacity-70 cursor-not-allowed"
+                : "text-darkest-blue"
+            }`}
             onClick={() => paginate(1)}
             disabled={currentPage === 1}
           >
             <GoArrowLeft />
           </button>
           <button
-            className={`${currentPage === 1 ? "text-darkest-blue opacity-70 cursor-not-allowed" : "text-darkest-blue"}`}
+            className={`${
+              currentPage === 1
+                ? "text-darkest-blue opacity-70 cursor-not-allowed"
+                : "text-darkest-blue"
+            }`}
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -230,7 +265,11 @@ const Table = ({
             {generatePageNumbers().map((page, index) => (
               <button
                 key={index}
-                className={`px-2.5 py-1 text-sm rounded-md ${currentPage === page ? "bg-layout-text font-medium text-white" : "text-layout-text"}`}
+                className={`px-2.5 py-1 text-sm rounded-md ${
+                  currentPage === page
+                    ? "bg-layout-text font-medium text-white"
+                    : "text-layout-text"
+                }`}
                 onClick={() => paginate(page)}
               >
                 {page}
@@ -239,14 +278,22 @@ const Table = ({
             {totalPages > 5 && <span>...</span>}
           </div>
           <button
-            className={`${currentPage === totalPages ? "text-grey opacity-70 cursor-not-allowed" : "text-black"}`}
+            className={`${
+              currentPage === totalPages
+                ? "text-grey opacity-70 cursor-not-allowed"
+                : "text-black"
+            }`}
             onClick={() => paginate(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
             Next
           </button>
           <button
-            className={`${currentPage === totalPages ? "text-black opacity-70 cursor-not-allowed" : "text-black"}`}
+            className={`${
+              currentPage === totalPages
+                ? "text-black opacity-70 cursor-not-allowed"
+                : "text-black"
+            }`}
             onClick={() => paginate(totalPages)}
             disabled={currentPage === totalPages}
           >
