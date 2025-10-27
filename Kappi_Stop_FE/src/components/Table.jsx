@@ -11,13 +11,14 @@ import Button from "./Button";
 
 const Table = ({
   title,
-  setting_title=false,
+  setting_title = false,
   add_icon,
   add_button,
   columns = [],
   data = [],
   showActions = true,
   ViewRoute = false,
+  EditRoute = false,
   EditModal = null,
   AddModal = null,
   itemsPerPage = 9,
@@ -86,7 +87,7 @@ const Table = ({
         {setting_title && (
           <div className="font-roboto-flex flex flex-col ">
             <p className=" space-x-1">
-             <span> Settings</span>
+              <span> Settings</span>
               <span>/ {setting_title}</span>
             </p>
             <p className="text-xl  font-semibold ">{setting_title}</p>
@@ -193,17 +194,22 @@ const Table = ({
                   {showActions && (
                     <td className="p-2 rounded-r-lg">
                       <div className="flex items-center justify-center gap-2">
-                        {EditModal && (
+                        {(EditModal || EditRoute) && (
                           <button
                             onClick={() => {
                               setSelectedItem(item);
-                              setShowEdit(true);
+                              if (EditModal) {
+                                setShowEdit(true);
+                              } else if (EditRoute) {
+                                navigate(EditRoute, { state: { item } });
+                              }
                             }}
                             className="cursor-pointer bg-[#C9E0FF] p-1.5 rounded"
                           >
                             <Pencil size={14} className="text-blue-500" />
                           </button>
                         )}
+
                         {ViewRoute && (
                           <button
                             onClick={() =>
