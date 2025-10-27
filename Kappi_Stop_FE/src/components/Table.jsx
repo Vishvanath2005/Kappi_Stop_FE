@@ -16,7 +16,7 @@ const Table = ({
   columns = [],
   data = [],
   showActions = true,
-  ViewRoute = "",
+  ViewRoute = false,
   EditModal = null,
   AddModal=null ,
   itemsPerPage = 9,
@@ -74,7 +74,6 @@ const Table = ({
 
   return (
     <>
-      {/* Header */}
       <div className="flex sm:justify-between space-y-2 sm:items-center mb-4 flex-col sm:flex-row">
         <div className="text-layout-text">
           <p className="font-roboto-flex text-sm">{title}</p>
@@ -108,8 +107,6 @@ const Table = ({
           />
         </div>
       </div>
-
-      {/* Table */}
       <div className="overflow-auto no-scrollbar h-130">
         <table className="w-full whitespace-nowrap border-collapse">
           <thead>

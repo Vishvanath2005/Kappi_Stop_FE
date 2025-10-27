@@ -103,25 +103,23 @@ const Layouts = () => {
     <div className="font-roboto-flex w-full h-screen">
       <Navbar />
       <div className="flex  bg-background h-11/12">
-        <div className="px-7 my-2 pb-2 w-[150px] drop-shadow-sm overflow-y-scroll no-scrollbar ">
-          <div className="  flex justify-center  ">
-            <ul className="">
-              {Menus.map((menu, index) => (
-                <NavLink key={index} to={menu.to}>
-                  <li
-                    className={`w-[100px] mb-3 h-20 text-sm font-light flex flex-col justify-center items-center text-center rounded-xl transition-all duration-300 ${
-                      isMenuActive(menu)
-                        ? "text-white bg-layout-text"
-                        : "text-layout-text border border-layout-text hover:bg-layout-text hover:text-white"
-                    }`}
-                  >
-                    <span>{menu.icon}</span>
-                    <p>{menu.title}</p>
-                  </li>
-                </NavLink>
-              ))}
-            </ul>
-          </div>
+        <div className=" pb-2  px-6 pt-2 bg-background overflow-auto no-scrollbar drop-shadow-sm">
+          <ul className="flex flex-col items-center justify-center">
+            {Menus.map((menu, index) => (
+              <NavLink key={index} to={menu.to}>
+                <li
+                  className={`w-[100px] mb-3 h-20 text-sm font-light flex flex-col justify-center items-center text-center rounded-xl transition-all duration-300 ${
+                    isMenuActive(menu)
+                      ? "text-white bg-layout-text"
+                      : "text-layout-text border border-sidebar-outine hover:bg-layout-text hover:text-white"
+                  }`}
+                >
+                  <span>{menu.icon}</span>
+                  <p>{menu.title}</p>
+                </li>
+              </NavLink>
+            ))}
+          </ul>
         </div>
 
         {activeNestedMenu && (
