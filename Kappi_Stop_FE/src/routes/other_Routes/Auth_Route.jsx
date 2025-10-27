@@ -1,8 +1,8 @@
 import React from "react";
 import { Route } from "react-router";
-import Login from "../pages/auth/Login";
-import Forgot_Password from "../pages/auth/Forgot_Password";
-import Reset_Password from "../pages/auth/Reset_Password";
+import Login from "../../pages/auth/Login";
+import Forgot_Password from "../../pages/auth/Forgot_Password";
+import Reset_Password from "../../pages/auth/Reset_Password";
 
 const Auth_Route = () => {
   return (

@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Auth_Route from "./Auth_Route";
+import Auth_Route from "./other_Routes/Auth_Route";
 import Layouts from "../layout/Layouts";
-import Dashboard_Route from "./Dashboard_Route";
-import User_Route from "./User_Route";
-import Report_Route from "./Report_Route";
-import Settings_Route from "./Settings_Route";
+import Dashboard_Route from "./other_Routes/Dashboard_Route";
+import User_Route from "./other_Routes/User_Route";
+import Report_Route from "./other_Routes/Report_Route";
+import Settings_Route from "./other_Routes/Settings_Route";
 
 const Main_Router = () => {
   return (

@@ -89,6 +89,7 @@ const User_Settings = () => {
         columns={usersettingColumns}
         data={usersettingData}
         AddModal={Add_User_Settings}
+        EditRoute="/settings/user/edit_user_setting"
       />
     </>
   );
