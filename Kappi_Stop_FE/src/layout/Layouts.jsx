@@ -46,7 +46,7 @@ const Layouts = () => {
     {
       title: "Wallet & Rewards",
       icon: <Wallet size={27} />,
-      to: "/walletandrewards",
+      to: "/wallet_rewards",
     },
     {
       title: "Offers Management",

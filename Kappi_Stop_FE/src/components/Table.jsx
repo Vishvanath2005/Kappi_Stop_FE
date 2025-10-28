@@ -16,6 +16,7 @@ const Table = ({
   add_button,
   columns = [],
   data = [],
+  Export_Filter=true,
   showActions = true,
   ViewRoute = false,
   EditRoute = false,
@@ -104,8 +105,8 @@ const Table = ({
               paddingX="px-4"
               onClick={() => setShowAdd(true)}
             />
-          )}
-          <Button
+          )}{Export_Filter &&
+          (<><Button
             button_icon={<TbFileExport size={22} />}
             button_name="Export"
             bgColor="bg-white"
@@ -118,10 +119,10 @@ const Table = ({
             bgColor="bg-white"
             textColor="text-layout-text"
             paddingX="px-4"
-          />
+          /> </>)}
         </div>
       </div>
-      <div className="overflow-auto no-scrollbar h-130">
+      <div className="overflow-auto no-scrollbar h-fit">
         <table className="w-full whitespace-nowrap border-collapse">
           <thead>
             <tr className="font-semibold text-sm bg-white border-b-4 border-background h-14 drop-shadow-sm">
