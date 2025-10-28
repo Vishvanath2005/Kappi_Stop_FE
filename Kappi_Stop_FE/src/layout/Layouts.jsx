@@ -31,7 +31,7 @@ const Layouts = () => {
     {
       title: "Store Management",
       icon: <TbBuildingStore size={27} />,
-      to: "/storemanagement",
+      to: "/store",
     },
     {
       title: "Menu Management",
@@ -111,7 +111,7 @@ const Layouts = () => {
                   className={`w-[100px] mb-3 h-20 text-sm font-light flex flex-col justify-center items-center text-center rounded-xl transition-all duration-300 ${
                     isMenuActive(menu)
                       ? "text-white bg-layout-text"
-                      : "text-layout-text border border-sidebar-outine hover:bg-layout-text hover:text-white"
+                      : "text-layout-text border border-sidebar-outine hover:bg-layout-text hover:opacity-90 hover:text-white"
                   }`}
                 >
                   <span>{menu.icon}</span>

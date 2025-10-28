@@ -7,6 +7,7 @@ import User_Route from "./other_Routes/User_Route";
 import Report_Route from "./other_Routes/Report_Route";
 import Settings_Route from "./other_Routes/Settings_Route";
 import Wallet_Route from "./other_Routes/Wallet_Route";
+import Store_Route from "./other_Routes/Store_Route";
 
 const Main_Router = () => {
   return (
@@ -17,6 +18,7 @@ const Main_Router = () => {
           <Route element={<Layouts />}>
             {Dashboard_Route()}
             {User_Route()}
+            {Store_Route()}
             {Wallet_Route()}
             {Report_Route()}
             {Settings_Route()}
