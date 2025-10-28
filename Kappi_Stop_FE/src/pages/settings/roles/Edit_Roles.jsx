@@ -8,14 +8,14 @@ const Edit_Roles = () => {
 
   const settingsData = [
     "Dashboard",
-    "GMD",
-    "Leads",
-    "CMS",
-    "Appointment",
-    "Finance",
+    "User Management",
+    "Store Management",
+    "Menu Management",
+    "Orders & Kitchen Management",
+    "Wallet & Rewards Management",
+    "Offers Management",
+    "Nearby Attractions",
     "Reports",
-    "Subscribers",
-    "Subscription",
     "Settings",
   ];
 
@@ -99,10 +99,10 @@ const Edit_Roles = () => {
       </form>
       <div className="bg-white p-7 rounded-md drop-shadow-sm">
         <div className="grid grid-cols-12 ">
-          <div className="col-span-3 text-lg font-semibold text-center pb-3 border-r">
+          <div className="col-span-4 text-lg font-semibold text-center pb-3 border-r">
             Settings
           </div>
-          <div className="col-span-9 text-lg font-semibold pl-10">
+          <div className="col-span-8 text-lg font-semibold pl-10">
             Permissions
           </div>
         </div>
@@ -111,7 +111,7 @@ const Edit_Roles = () => {
             key={sIndex}
             className="grid grid-cols-12 items-center "
           >
-            <div className="col-span-3 flex items-center pl-5 gap-3 py-2.5 border-r">
+            <div className="col-span-4 flex items-center pl-5 gap-3 py-2.5 border-r">
               <input
                 type="checkbox"
                 name={setting.toLowerCase()}
@@ -121,7 +121,7 @@ const Edit_Roles = () => {
               />
               <p className="font-medium">{setting}</p>
             </div>
-            <div className="col-span-9 flex justify-start gap-6 pl-10 py-2.5">
+            <div className="col-span-8 flex justify-around gap-6 pl-10 py-2.5">
               {permissionTypes.map((perm, pIndex) => (
                 <div
                   key={pIndex}
