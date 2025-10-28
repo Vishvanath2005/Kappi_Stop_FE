@@ -36,7 +36,7 @@ const Layouts = () => {
     {
       title: "Menu Management",
       icon: <FaRegRectangleList size={27} />,
-      to: "/menumanagement",
+      to: "/menu",
     },
     {
       title: "Orders & Kitchen",

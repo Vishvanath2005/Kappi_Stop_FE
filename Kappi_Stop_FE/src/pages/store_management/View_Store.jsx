@@ -1,6 +1,4 @@
 import React from "react";
-import { MdOutlineBlock } from "react-icons/md";
-import { CgUnblock } from "react-icons/cg";
 import { useLocation } from "react-router";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import View_Page from "../../components/View_Page";
@@ -23,7 +21,9 @@ const View_Store = () => {
   return (
     <View_Page
       title="Store Management"
-      status_name={store?.status === "Active" ? "Unavailable" : "Available"}
+      status_name={
+        store?.status === "Active" ? "Disable Store" : "Enable Store"
+      }
       icon_name={<HiOutlineBuildingStorefront size={22} />}
       button_color={`${
         store.status === "Active" ? "bg-layout-text" : "bg-white"

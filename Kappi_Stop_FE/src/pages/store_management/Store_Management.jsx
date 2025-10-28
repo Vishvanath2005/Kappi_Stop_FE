@@ -1,6 +1,8 @@
 import React from "react";
 import Table from "../../components/Table";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
+import Edit_Store from "./Edit_Store";
+import Add_Store from "./Add_Store";
 
 const Store_Management = () => {
   const storeColumns = [
@@ -115,8 +117,8 @@ const Store_Management = () => {
         columns={storeColumns}
         data={storeData}
         ViewRoute="/store/view_store"
-        EditModal={true}
-        AddModal={true}
+        EditModal={Edit_Store}
+        AddModal={Add_Store}
         itemsPerPage={9}
       />
     </>

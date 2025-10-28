@@ -8,6 +8,7 @@ import Report_Route from "./other_Routes/Report_Route";
 import Settings_Route from "./other_Routes/Settings_Route";
 import Wallet_Route from "./other_Routes/Wallet_Route";
 import Store_Route from "./other_Routes/Store_Route";
+import Menu_Route from "./other_Routes/Menu_Route";
 
 const Main_Router = () => {
   return (
@@ -19,6 +20,7 @@ const Main_Router = () => {
             {Dashboard_Route()}
             {User_Route()}
             {Store_Route()}
+            {Menu_Route()}
             {Wallet_Route()}
             {Report_Route()}
             {Settings_Route()}
