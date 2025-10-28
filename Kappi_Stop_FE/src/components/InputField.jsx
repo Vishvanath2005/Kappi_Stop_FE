@@ -6,6 +6,10 @@ export const InputField = ({
   name,
   register,
   errors,
+  bg_color,
+  width,
+  text_size="text-sm",
+  gap="gap-x-10",
   placeholder,
   type = "text",
   options = [],
@@ -13,14 +17,14 @@ export const InputField = ({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="grid grid-cols-12 items-center gap-x-10">
-      <label className="col-span-5 text-sm font-medium">{label}</label>
+    <div className={`grid grid-cols-12 items-center ${gap}`}>
+      <label className={`col-span-5 ${text_size} font-medium`}>{label}</label>
 
       {type === "select" ? (
         <select
           defaultValue=""
           {...register(name)}
-          className={`col-span-7 border border-input-bordergrey rounded-lg outline-none py-2.5 pl-2 text-xs font-light 
+          className={`col-span-7 ${bg_color} ${width} border border-input-bordergrey rounded-lg outline-none py-2.5 pl-2 text-xs font-light 
           ${errors[name] ? "border-red-500" : ""}`}
         >
           <option value="" disabled>

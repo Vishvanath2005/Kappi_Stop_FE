@@ -28,7 +28,7 @@ const Roles_Settings = () => {
         add_button={false}
         columns={rolesColumns}
         data={rolesData}
-        EditRoute="/settings/user/edit_user_setting"
+        EditRoute="/settings/roles/edit_roles"
       />
     </>
   )
