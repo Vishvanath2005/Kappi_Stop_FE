@@ -18,8 +18,8 @@ const View_Page = ({
 
   const getStatusColor = (value) => {
     const status = String(value || "");
-    if (status === "Active" || status === "Complete") return "text-green-500";
-    if (status === "Inactive" || status === "Blocked") return "text-red-500";
+    if (status === "Active" || status === "Complete" || status==="Available") return "text-green-500";
+    if (status === "Inactive" || status === "Blocked" || status==="Unavailable") return "text-red-500";
     return "text-gray-500";
   };
 

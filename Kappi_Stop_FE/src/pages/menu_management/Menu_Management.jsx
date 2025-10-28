@@ -1,6 +1,8 @@
 import React from 'react'
 import Table from '../../components/Table'
 import { RiDashboardFill } from 'react-icons/ri'
+import Edit_Product from './Edit_Product';
+import Add_Product from './Add_Product';
 
 const Menu_Management = () => {
      const menuColumns = [
@@ -8,7 +10,7 @@ const Menu_Management = () => {
     { key: "product_name", label: "Product Name" },
     { key: "category", label: "Category" },
     { key: "price", label: "Price" },
-    { key: "addons", label: "Add-ons Available" },
+    { key: "add_ons", label: "Add-ons Available" },
     { key: "last_updated", label: "Last Updated" },
     { key: "status", label: "Status" },
   ];
@@ -19,7 +21,7 @@ const Menu_Management = () => {
       product_name: "Coffee",
       category: "Coffee",
       price: "$9.99",
-      addons: "Extra Sugar",
+      add_ons: "Extra Sugar",
       last_updated: "27.08.2025",
       status: "Available",
     },
@@ -28,7 +30,7 @@ const Menu_Management = () => {
       product_name: "Coffee",
       category: "Coffee",
       price: "$9.99",
-      addons: "Extra Sugar",
+      add_ons: "Extra Sugar",
       last_updated: "27.08.2025",
       status: "Unavailable",
     },
@@ -37,7 +39,7 @@ const Menu_Management = () => {
       product_name: "Coffee",
       category: "Coffee",
       price: "$9.99",
-      addons: "Extra Sugar",
+      add_ons: "Extra Sugar",
       last_updated: "27.08.2025",
       status: "Available",
     },
@@ -50,9 +52,9 @@ const Menu_Management = () => {
         add_button="Add Product"
         columns={menuColumns}
         data={menuData}
-        ViewRoute="/menu/view_menu"
-        EditModal={true}
-        AddModal={true}
+        ViewRoute="/menu/view_product"
+        EditModal={Edit_Product}
+        AddModal={Add_Product}
         itemsPerPage={9}
       /></>
   )
