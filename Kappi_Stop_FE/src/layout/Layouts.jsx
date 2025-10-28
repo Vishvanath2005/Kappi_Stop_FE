@@ -41,7 +41,7 @@ const Layouts = () => {
     {
       title: "Orders & Kitchen",
       icon: <GrRestaurant size={27} />,
-      to: "/ordersandkitchen",
+      to: "/orders",
     },
     {
       title: "Wallet & Rewards",
@@ -61,7 +61,7 @@ const Layouts = () => {
     {
       title: "Nearby Attractions",
       icon: <FaStackOverflow size={27} />,
-      to: "/nearbyattractions",
+      to: "/nearby",
     },
     {
       title: "Reports",

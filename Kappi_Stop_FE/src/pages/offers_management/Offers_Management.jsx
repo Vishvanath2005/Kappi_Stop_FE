@@ -31,7 +31,7 @@ const Offer_Management = () => {
       discount: "20%",
       validity: "07/01/2024 - 07/31/2024",
       applicableStores: "All Stores",
-      status: "In active",
+      status: "Inactive",
     },
     {
       offerId: "#12347",
@@ -49,7 +49,7 @@ const Offer_Management = () => {
       discount: "20%",
       validity: "07/01/2024 - 07/31/2024",
       applicableStores: "All Stores",
-      status: "In active",
+      status: "Inactive",
     },
     {
       offerId: "#12349",
@@ -72,7 +72,7 @@ const Offer_Management = () => {
   ];
 
   return (
-    <div>
+    <>
       <Table
         title="Offer Management"
         add_icon={
@@ -89,7 +89,7 @@ const Offer_Management = () => {
         AddModal={Create_Offer}
         itemsPerPage={8}
       />
-    </div>
+    </>
   );
 };
 

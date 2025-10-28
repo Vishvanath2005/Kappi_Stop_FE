@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import Modal from "../../components/Modal";
 import { InputField } from "../../components/InputField";
 
@@ -76,7 +75,7 @@ const Add_User = ({ onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="cursor-pointer border border-dark-yellow text-dark-yellow px-6 py-2 rounded"
+              className="cursor-pointer border border-layout-text text-layout-text px-6 py-2 rounded"
             >
               Cancel
             </button>
