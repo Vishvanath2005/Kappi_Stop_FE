@@ -53,10 +53,10 @@ const Layouts = () => {
       icon: (
         <div className="relative w-6 h-6">
           <Clipboard className="absolute" />
-          <DollarSign className="absolute left-1 top-2 w-3 h-3" />
+          <DollarSign className="absolute left-1.5 top-2 w-3 h-3" />
         </div>
       ),
-      to: "/offersmanagement",
+      to: "/offers",
     },
     {
       title: "Nearby Attractions",
