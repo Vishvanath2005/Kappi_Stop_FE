@@ -8,7 +8,7 @@ const View_Product = () => {
   const product = state?.item || {};
 
   const productColumns = [
-    { key: "product_id", label: "Product ID" },
+    { key: "productId", label: "Product ID" },
     { key: "product_name", label: "Product Name" },
     { key: "category", label: "Category" },
     { key: "price", label: "Price" },

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Modal from "../../components/Modal";
 import { InputField } from "../../components/InputField";
+import axios from "axios";
+import { API } from "../../Host";
 
 const schema = yup.object().shape({
   productname: yup.string().required("UserID is required"),
@@ -16,9 +18,10 @@ const schema = yup.object().shape({
     .required("Status is required"),
 });
 
-const Edit_Product = ({onClose,item}) => {
-    console.log(item);
-    
+const Edit_Product = ({ onClose, item }) => {
+  const [Category, setcategory] = useState([]);
+  console.log(item);
+
   const {
     register,
     handleSubmit,
@@ -27,9 +30,33 @@ const Edit_Product = ({onClose,item}) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    onClose();
+  const fetchCategory = async () => {
+    try {
+      const res = await axios.get(`${API}/category/getallcategory`);
+      setcategory(res.data.data);
+    } catch (error) {
+      console.error("Error fetching store data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  const onSubmit = async (data) => {
+    try {
+      data.add_ons = data.add_ons
+        ? data.add_ons.split(",").map((a) => a.trim())
+        : [];
+
+      console.log("Updated Product:", data);
+
+      await axios.put(`${API}/menu/updatemenu/${item.productId}`, data);
+
+      onClose();
+    } catch (error) {
+      console.error("Update Error:", error);
+    }
   };
   return (
     <>
@@ -52,6 +79,18 @@ const Edit_Product = ({onClose,item}) => {
                     label="Category"
                     name="category"
                     placeholder={item.category}
+                    type="select"
+                    options={Category.map((cat) => ({
+                      value: cat._id,
+                      label: cat.category_name,
+                    }))}
+                    register={register}
+                    errors={errors}
+                  />
+                  <InputField
+                    label="Type"
+                    name="type"
+                    placeholder={item.type}
                     register={register}
                     errors={errors}
                   />

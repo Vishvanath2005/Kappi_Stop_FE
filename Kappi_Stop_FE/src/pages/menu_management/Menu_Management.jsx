@@ -1,12 +1,16 @@
-import React from 'react'
-import Table from '../../components/Table'
-import { RiDashboardFill } from 'react-icons/ri'
-import Edit_Product from './Edit_Product';
-import Add_Product from './Add_Product';
+import React, { useEffect, useState } from "react";
+import Table from "../../components/Table";
+import { RiDashboardFill } from "react-icons/ri";
+import Edit_Product from "./Edit_Product";
+import Add_Product from "./Add_Product";
+import axios from "axios";
+import { API, formatDate1 } from "../../Host";
 
 const Menu_Management = () => {
-     const menuColumns = [
-    { key: "product_id", label: "Product ID" },
+  const [menuData, setMenuData] = useState([]);
+
+  const menuColumns = [
+    { key: "productId", label: "Product ID" },
     { key: "product_name", label: "Product Name" },
     { key: "category", label: "Category" },
     { key: "price", label: "Price" },
@@ -15,92 +19,31 @@ const Menu_Management = () => {
     { key: "status", label: "Status" },
   ];
 
-  const menuData = [
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Unavailable",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-    {
-      product_id: "#12345",
-      product_name: "Coffee",
-      category: "Coffee",
-      price: "$9.99",
-      add_ons: "Extra Sugar",
-      last_updated: "27.08.2025",
-      status: "Available",
-    },
-  ];
+  const fetchMenu = async () => {
+    try {
+      const response = await axios.get(`${API}/menu/getallmenu`);
+      const transformedData = response.data.data.map((item) => ({
+        productId: item.productId,
+        product_name: item.product_name,
+        category: item.category,
+        price: item.price,
+        add_ons: item.add_ons,
+        last_updated: formatDate1(item.last_updated),
+        status: item.status,
+      }));
+
+      setMenuData(transformedData.reverse());
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMenu();
+  }, []);
   return (
     <>
-     <Table
+      <Table
         title="Menu Management"
         add_icon={<RiDashboardFill size={18} />}
         add_button="Add Product"
@@ -110,8 +53,9 @@ const Menu_Management = () => {
         EditModal={Edit_Product}
         AddModal={Add_Product}
         itemsPerPage={9}
-      /></>
-  )
-}
+      />
+    </>
+  );
+};
 
-export default Menu_Management
+export default Menu_Management;
