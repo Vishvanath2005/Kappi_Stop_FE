@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { InputField } from "../../components/InputField";
+import axios from "axios";
+import {API} from "../../Host"
 
 const schema = yup.object().shape({
   store_name: yup.string().required("Store Name is required"),
@@ -21,9 +23,17 @@ const Add_Store = ({ onClose }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    onClose();
+ const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      const response = await axios.post(`${API}/store/createstore`, data);
+
+      if (response.status === 201 || response.status === 200) {
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
   };
   return (
     <>
@@ -58,7 +68,7 @@ const Add_Store = ({ onClose }) => {
                   />
                   <InputField
                     label="Contact Number"
-                    name="contact_number"
+                    name="store_number"
                     placeholder="Enter the Contact Number"
                     register={register}
                     errors={errors}

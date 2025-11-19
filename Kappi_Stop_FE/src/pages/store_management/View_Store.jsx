@@ -8,12 +8,12 @@ const View_Store = () => {
   const { state } = useLocation();
   const store = state?.item || {};
 
-  const storeColumns = [
-    { key: "store_id", label: "Store ID" },
+ const storeColumns = [
+    { key: "storeId", label: "Store ID" },
     { key: "store_name", label: "Store Name" },
     { key: "city", label: "City" },
     { key: "address", label: "Address" },
-    { key: "contact_number", label: "Contact Number" },
+    { key: "store_number", label: "Contact Number" },
     { key: "opening_hours", label: "Opening Hours" },
     { key: "status", label: "Status" },
   ];
