@@ -14,14 +14,17 @@ const Table = ({
   setting_title = false,
   add_icon,
   add_button,
+  category_icon,
+  category_button,
   columns = [],
   data = [],
-  Export_Filter=true,
+  Export_Filter = true,
   showActions = true,
   ViewRoute = false,
   EditRoute = false,
   EditModal = null,
   AddModal = null,
+  AddCategoryModal = null,
   itemsPerPage = 9,
 }) => {
   const navigate = useNavigate();
@@ -30,6 +33,7 @@ const Table = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
+  const [showAddCategory, setShowAddCategory] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -96,6 +100,16 @@ const Table = ({
         )}
 
         <div className="flex items-center space-x-2">
+          {AddCategoryModal && (
+            <Button
+              button_icon={category_icon}
+              button_name={category_button}
+              bgColor="bg-layout-text"
+              textColor="text-white"
+              paddingX="px-4"
+              onClick={() => setShowAddCategory(true)}
+            />
+          )}
           {AddModal && (
             <Button
               button_icon={add_icon}
@@ -105,21 +119,25 @@ const Table = ({
               paddingX="px-4"
               onClick={() => setShowAdd(true)}
             />
-          )}{Export_Filter &&
-          (<><Button
-            button_icon={<TbFileExport size={22} />}
-            button_name="Export"
-            bgColor="bg-white"
-            textColor="text-layout-text"
-            paddingX="px-4"
-          />
-          <Button
-            button_icon={<BiFilterAlt size={22} />}
-            button_name="Filter"
-            bgColor="bg-white"
-            textColor="text-layout-text"
-            paddingX="px-4"
-          /> </>)}
+          )}
+          {Export_Filter && (
+            <>
+              <Button
+                button_icon={<TbFileExport size={22} />}
+                button_name="Export"
+                bgColor="bg-white"
+                textColor="text-layout-text"
+                paddingX="px-4"
+              />
+              <Button
+                button_icon={<BiFilterAlt size={22} />}
+                button_name="Filter"
+                bgColor="bg-white"
+                textColor="text-layout-text"
+                paddingX="px-4"
+              />{" "}
+            </>
+          )}
         </div>
       </div>
       <div className="overflow-auto no-scrollbar h-fit">
@@ -314,6 +332,9 @@ const Table = ({
         <EditModal onClose={() => setShowEdit(false)} item={selectedItem} />
       )}
       {AddModal && showAdd && <AddModal onClose={() => setShowAdd(false)} />}
+      {AddCategoryModal && showAddCategory && (
+        <AddCategoryModal onClose={() => setShowAddCategory(false)} />
+      )}
     </>
   );
 };

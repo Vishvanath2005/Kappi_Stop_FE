@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Table from "../../components/Table";
 import { RiDashboardFill } from "react-icons/ri";
 import Edit_Product from "./Edit_Product";
+import Add_Category from "./Add_Category"
 import Add_Product from "./Add_Product";
 import axios from "axios";
 import { API, formatDate1 } from "../../Host";
+import { TbCategoryPlus } from "react-icons/tb";
 
 const Menu_Management = () => {
   const [menuData, setMenuData] = useState([]);
@@ -26,6 +28,7 @@ const Menu_Management = () => {
         productId: item.productId,
         product_name: item.product_name,
         category: item.category,
+        type:item.type,
         price: item.price,
         add_ons: item.add_ons,
         last_updated: formatDate1(item.last_updated),
@@ -49,6 +52,9 @@ const Menu_Management = () => {
         add_button="Add Product"
         columns={menuColumns}
         data={menuData}
+        AddCategoryModal={Add_Category}
+        category_icon={<TbCategoryPlus size={18}/>}
+        category_button="Add Category"
         ViewRoute="/menu/view_product"
         EditModal={Edit_Product}
         AddModal={Add_Product}

@@ -8,18 +8,22 @@ export const InputField = ({
   errors,
   bg_color,
   width,
-  text_size="text-sm",
-  gap="gap-x-10",
+  text_size = "text-sm",
+  gap = "gap-x-10",
   placeholder,
   type = "text",
   options = [],
+  multiple = false, // NEW: allow multiple file uploads
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className={`grid grid-cols-12 items-center ${gap}`}>
-      <label className={`col-span-5 ${text_size} font-medium`}>{label}</label>
+      <label className={`col-span-5 ${text_size} font-medium`}>
+        {label}
+      </label>
 
+      {/* Dropdown Select */}
       {type === "select" ? (
         <select
           defaultValue=""
@@ -36,7 +40,9 @@ export const InputField = ({
             </option>
           ))}
         </select>
+
       ) : type === "password" ? (
+        // Password Input with Show/Hide
         <div className="col-span-7 relative">
           <input
             type={showPassword ? "text" : "password"}
@@ -52,7 +58,19 @@ export const InputField = ({
             {showPassword ? <IoEyeOff size={18} /> : <IoEye size={18} />}
           </span>
         </div>
+
+      ) : type === "file" ? (
+        // NEW FILE UPLOAD INPUT
+        <input
+          type="file"
+          {...register(name)}
+          multiple={multiple}
+          className={`col-span-7 border border-input-bordergrey rounded-lg outline-none py-3 px-2 text-xs font-semibold text-gray-600
+          ${errors[name] ? "border-red-500" : ""}`}
+        />
+
       ) : (
+        // Normal Text/Number Inputs
         <input
           type={type}
           placeholder={placeholder}
