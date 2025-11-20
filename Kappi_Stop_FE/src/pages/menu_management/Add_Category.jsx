@@ -42,7 +42,6 @@ const Add_Category = ({ onClose }) => {
     formData.append("category_img", data.category_img[0]);
 
     try {
-      
       const res = await axios.post(`${API}/category/createcategory`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -99,7 +98,7 @@ const Add_Category = ({ onClose }) => {
                       register={register}
                       errors={errors}
                     />
-                  )}  
+                  )}
                 </div>
               </div>
 

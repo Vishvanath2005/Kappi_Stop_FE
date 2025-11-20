@@ -19,21 +19,24 @@ const schema = yup.object().shape({
 });
 
 const Edit_Product = ({ onClose, item }) => {
-  const [Category, setcategory] = useState([]);
-  console.log(item);
+  const [Category, setCategory] = useState([]);
+  const [selectedCategoryType, setSelectedCategoryType] = useState([]);
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
+  const selectedCategoryId = watch("category");
+
   const fetchCategory = async () => {
     try {
       const res = await axios.get(`${API}/category/getallcategory`);
-      setcategory(res.data.data);
+      setCategory(res.data.data);
     } catch (error) {
       console.error("Error fetching store data:", error);
     }
@@ -42,6 +45,22 @@ const Edit_Product = ({ onClose, item }) => {
   useEffect(() => {
     fetchCategory();
   }, []);
+
+  // 🔥 When category changes → update its types
+  useEffect(() => {
+    if (selectedCategoryId) {
+      const selected = Category.find((cat) => cat._id === selectedCategoryId);
+
+      if (selected && selected.type) {
+        // Remove empty strings
+        const cleanedType = selected.type.filter((t) => t.trim() !== "");
+
+        setSelectedCategoryType(cleanedType);
+      } else {
+        setSelectedCategoryType([]);
+      }
+    }
+  }, [selectedCategoryId, Category]);
 
   const onSubmit = async (data) => {
     try {
@@ -58,6 +77,7 @@ const Edit_Product = ({ onClose, item }) => {
       console.error("Update Error:", error);
     }
   };
+
   return (
     <>
       <Modal
@@ -66,8 +86,9 @@ const Edit_Product = ({ onClose, item }) => {
         Children={
           <>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className=" px-7 py-6">
-                <div className=" lg:space-y-4 space-y-3">
+              <div className="px-7 py-6">
+                <div className="lg:space-y-4 space-y-3">
+                  
                   <InputField
                     label="Product Name"
                     name="product_name"
@@ -75,11 +96,12 @@ const Edit_Product = ({ onClose, item }) => {
                     register={register}
                     errors={errors}
                   />
+
                   <InputField
                     label="Category"
                     name="category"
-                    placeholder={item.category}
                     type="select"
+                    placeholder="select the category"
                     options={Category.map((cat) => ({
                       value: cat._id,
                       label: cat.category_name,
@@ -87,13 +109,25 @@ const Edit_Product = ({ onClose, item }) => {
                     register={register}
                     errors={errors}
                   />
+
+                  {/* 🔥 Auto-filled TYPE dropdown */}
                   <InputField
                     label="Type"
                     name="type"
+                    type="select"
                     placeholder={item.type}
+                    options={
+                      selectedCategoryType.length > 0
+                        ? selectedCategoryType.map((t) => ({
+                            value: t,
+                            label: t,
+                          }))
+                        : [{ value: "", label: "No types available" }]
+                    }
                     register={register}
                     errors={errors}
                   />
+
                   <InputField
                     label="Add-ons"
                     name="add_ons"
@@ -101,6 +135,7 @@ const Edit_Product = ({ onClose, item }) => {
                     register={register}
                     errors={errors}
                   />
+
                   <InputField
                     label="Price"
                     name="price"
@@ -112,10 +147,8 @@ const Edit_Product = ({ onClose, item }) => {
                   <InputField
                     label="Status"
                     name="status"
-                    register={register}
-                    errors={errors}
-                    placeholder={item.status}
                     type="select"
+                    placeholder={item.status}
                     options={[
                       {
                         value: "Available",
@@ -123,20 +156,23 @@ const Edit_Product = ({ onClose, item }) => {
                       },
                       { value: "Unavailable", label: "Unavailable" },
                     ]}
+                    register={register}
+                    errors={errors}
                   />
                 </div>
               </div>
-              <div className="mx-5 text-xs flex lg:justify-end md:justify-center justify-center gap-2 mb-4">
+
+              <div className="mx-5 text-xs flex justify-end gap-2 mb-4">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="cursor-pointer  border  border-ltext-layout-text text-layout-text px-6 py-2   rounded"
+                  className="cursor-pointer border border-layout-text text-layout-text px-6 py-2 rounded"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="cursor-pointer px-6 bg-layout-text text-white py-2   rounded"
+                  className="cursor-pointer px-6 bg-layout-text text-white py-2 rounded"
                 >
                   Save
                 </button>
