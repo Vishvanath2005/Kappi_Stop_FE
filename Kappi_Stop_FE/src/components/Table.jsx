@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { TbFileExport } from "react-icons/tb";
 import { BiFilterAlt } from "react-icons/bi";
 import { HiArrowsUpDown } from "react-icons/hi2";
@@ -36,6 +36,16 @@ const Table = ({
   const [showAddCategory, setShowAddCategory] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  // ⭐ Loading State
+  const [loading, setLoading] = useState(true);
+
+  // ⭐ Show loading for a short time whenever "data" updates
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, [data]);
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   const handleSort = (key) => {
@@ -63,11 +73,6 @@ const Table = ({
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const displayText = `Showing results for ${Math.min(
-    indexOfLastItem,
-    data.length
-  )} out of ${data.length}`;
-
   const generatePageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
@@ -81,6 +86,7 @@ const Table = ({
 
   return (
     <>
+      {/* Header */}
       <div className="flex sm:justify-between space-y-2 sm:items-center mb-4 flex-col sm:flex-row">
         {title && (
           <div className="text-layout-text">
@@ -90,15 +96,16 @@ const Table = ({
         )}
 
         {setting_title && (
-          <div className="font-roboto-flex flex flex-col ">
-            <p className=" space-x-1">
+          <div className="font-roboto-flex flex flex-col">
+            <p>
               <span> Settings</span>
               <span>/ {setting_title}</span>
             </p>
-            <p className="text-xl  font-semibold ">{setting_title}</p>
+            <p className="text-xl font-semibold">{setting_title}</p>
           </div>
         )}
 
+        {/* Buttons */}
         <div className="flex items-center space-x-2">
           {AddCategoryModal && (
             <Button
@@ -110,6 +117,7 @@ const Table = ({
               onClick={() => setShowAddCategory(true)}
             />
           )}
+
           {AddModal && (
             <Button
               button_icon={add_icon}
@@ -120,6 +128,7 @@ const Table = ({
               onClick={() => setShowAdd(true)}
             />
           )}
+
           {Export_Filter && (
             <>
               <Button
@@ -135,19 +144,23 @@ const Table = ({
                 bgColor="bg-white"
                 textColor="text-layout-text"
                 paddingX="px-4"
-              />{" "}
+              />
             </>
           )}
         </div>
       </div>
+
+      {/* Table */}
       <div className="overflow-auto no-scrollbar h-fit">
         <table className="w-full whitespace-nowrap border-collapse">
           <thead>
             <tr className="font-semibold text-sm bg-white border-b-4 border-background h-14 drop-shadow-sm">
               <th className="p-3.5 rounded-l-lg">S.no</th>
+
               {columns.map((col, index) => {
                 const isLast = index === columns.length - 1;
                 const addRightRadius = isLast && !showActions;
+
                 return (
                   <th
                     key={col.key}
@@ -171,27 +184,42 @@ const Table = ({
                   </th>
                 );
               })}
+
               {showActions && (
                 <th className="pr-2 text-center rounded-r-lg">Action</th>
               )}
             </tr>
           </thead>
 
-          <tbody className=" bg-white text-sm font-light drop-shadow-sm">
-            {currentItems.length > 0 ? (
+          {/* ⭐ TABLE BODY WITH LOADING */}
+          <tbody className="bg-white text-sm font-light drop-shadow-sm">
+            {loading ? (
+              <tr>
+                <td
+                  colSpan={columns.length + (showActions ? 2 : 1)}
+                  className="py-10"
+                >
+                  <div className="flex justify-center">
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-4 border-layout-text"></div>
+                  </div>
+                </td>
+              </tr>
+            ) : currentItems.length > 0 ? (
               currentItems.map((item, index) => (
                 <tr
                   key={index}
                   className="border-b-[3px] text-gray-500 border-background text-center"
                 >
-                  <td className="p-3.5  rounded-l-lg">
+                  <td className="p-3.5 rounded-l-lg">
                     {indexOfFirstItem + index + 1}
                   </td>
-                  {columns.map((col, colIndex) => {
+
+                  {columns.map((col, ci) => {
                     const value = item[col.key] ?? "-";
                     const isStatus = col.key.toLowerCase() === "status";
+
                     return (
-                      <td key={colIndex} className="p-3.5">
+                      <td key={ci} className="p-3.5">
                         {isStatus ? (
                           <span
                             className={
@@ -210,6 +238,7 @@ const Table = ({
                       </td>
                     );
                   })}
+
                   {showActions && (
                     <td className="p-2 rounded-r-lg">
                       <div className="flex items-center justify-center gap-2">
@@ -217,11 +246,9 @@ const Table = ({
                           <button
                             onClick={() => {
                               setSelectedItem(item);
-                              if (EditModal) {
-                                setShowEdit(true);
-                              } else if (EditRoute) {
+                              if (EditModal) setShowEdit(true);
+                              else if (EditRoute)
                                 navigate(EditRoute, { state: { item } });
-                              }
                             }}
                             className="cursor-pointer bg-[#C9E0FF] p-1.5 rounded"
                           >
@@ -239,6 +266,7 @@ const Table = ({
                             <LuEye size={14} className="text-green-700" />
                           </button>
                         )}
+
                         <button className="cursor-pointer bg-red-100 p-1.5 rounded">
                           <RiDeleteBinLine size={16} className="text-red-600" />
                         </button>
@@ -249,7 +277,10 @@ const Table = ({
               ))
             ) : (
               <tr>
-                <td colSpan={columns.length + 2} className="text-center py-6">
+                <td
+                  colSpan={columns.length + 2}
+                  className="text-center py-6"
+                >
                   No data available
                 </td>
               </tr>
@@ -259,68 +290,56 @@ const Table = ({
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-between items-center h-1/12 px-3 whitespace-nowrap overflow-auto no-scrollbar mt-3">
-        <div className="text-sm font-normal text-black">
-          <p>{displayText}</p>
+      <div className="flex justify-between items-center px-3 mt-3">
+        <div className="text-sm text-black">
+          Showing results for {currentPage} out of {totalPages}
         </div>
-        <div className="flex items-center justify-center gap-4 pr-3">
+
+        <div className="flex items-center gap-4">
           <button
-            className={`${
-              currentPage === 1
-                ? "text-darkest-blue opacity-70 cursor-not-allowed"
-                : "text-darkest-blue"
-            }`}
-            onClick={() => paginate(1)}
             disabled={currentPage === 1}
+            onClick={() => paginate(1)}
+            className={currentPage === 1 ? "opacity-50" : ""}
           >
             <GoArrowLeft />
           </button>
+
           <button
-            className={`${
-              currentPage === 1
-                ? "text-darkest-blue opacity-70 cursor-not-allowed"
-                : "text-darkest-blue"
-            }`}
-            onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
+            onClick={() => paginate(currentPage - 1)}
+            className={currentPage === 1 ? "opacity-50" : ""}
           >
             Previous
           </button>
-          <div className="flex items-center gap-3 text-grey">
-            {generatePageNumbers().map((page, index) => (
+
+          <div className="flex items-center gap-3">
+            {generatePageNumbers().map((page, i) => (
               <button
-                key={index}
+                key={i}
+                onClick={() => paginate(page)}
                 className={`px-2.5 py-1 text-sm rounded-md ${
                   currentPage === page
-                    ? "bg-layout-text font-medium text-white"
+                    ? "bg-layout-text text-white"
                     : "text-layout-text"
                 }`}
-                onClick={() => paginate(page)}
               >
                 {page}
               </button>
             ))}
-            {totalPages > 5 && <span>...</span>}
           </div>
+
           <button
-            className={`${
-              currentPage === totalPages
-                ? "text-grey opacity-70 cursor-not-allowed"
-                : "text-black"
-            }`}
-            onClick={() => paginate(currentPage + 1)}
             disabled={currentPage === totalPages}
+            onClick={() => paginate(currentPage + 1)}
+            className={currentPage === totalPages ? "opacity-50" : ""}
           >
             Next
           </button>
+
           <button
-            className={`${
-              currentPage === totalPages
-                ? "text-black opacity-70 cursor-not-allowed"
-                : "text-black"
-            }`}
-            onClick={() => paginate(totalPages)}
             disabled={currentPage === totalPages}
+            onClick={() => paginate(totalPages)}
+            className={currentPage === totalPages ? "opacity-50" : ""}
           >
             <GoArrowRight />
           </button>
@@ -331,7 +350,9 @@ const Table = ({
       {EditModal && showEdit && (
         <EditModal onClose={() => setShowEdit(false)} item={selectedItem} />
       )}
-      {AddModal && showAdd && <AddModal onClose={() => setShowAdd(false)} />}
+      {AddModal && showAdd && (
+        <AddModal onClose={() => setShowAdd(false)} />
+      )}
       {AddCategoryModal && showAddCategory && (
         <AddCategoryModal onClose={() => setShowAddCategory(false)} />
       )}

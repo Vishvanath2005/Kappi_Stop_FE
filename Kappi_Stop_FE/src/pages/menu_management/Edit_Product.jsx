@@ -8,13 +8,23 @@ import axios from "axios";
 import { API } from "../../Host";
 
 const schema = yup.object().shape({
-  productname: yup.string().required("UserID is required"),
-  category: yup.string().required("Name is required"),
-  price: yup.string().required("EmailID is required"),
-  add_ons: yup.string().required("Add-Ons is required"),
+  product_name: yup.string().required("Product name is required"),
+
+  category: yup.string().required("Category is required"),
+
+  type: yup.string().nullable().required("Type is required"),
+
+  add_ons: yup.string().required("Add-ons is required"),
+
+  price: yup
+    .number()
+    .typeError("Price must be a number")
+    .positive("Price must be positive")
+    .required("Price is required"),
+
   status: yup
     .string()
-    .oneOf(["Available", "Unavailable"], "Invalid Status")
+    .oneOf(["Available", "Unavailable"], "Invalid status")
     .required("Status is required"),
 });
 
@@ -88,7 +98,6 @@ const Edit_Product = ({ onClose, item }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="px-7 py-6">
                 <div className="lg:space-y-4 space-y-3">
-                  
                   <InputField
                     label="Product Name"
                     name="product_name"
@@ -101,7 +110,7 @@ const Edit_Product = ({ onClose, item }) => {
                     label="Category"
                     name="category"
                     type="select"
-                    placeholder="select the category"
+                    placeholder={item.category}
                     options={Category.map((cat) => ({
                       value: cat._id,
                       label: cat.category_name,

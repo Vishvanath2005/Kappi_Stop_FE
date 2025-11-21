@@ -10,6 +10,14 @@ export const formatDate = (dateString) => {
   return `${day}/${month}/${year}`;
 };
 
+export const formatTime = (time) => {
+  const [hour, minute] = time.split(":");
+  const h = parseInt(hour);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const formattedHour = h % 12 || 12;
+  return `${formattedHour}:${minute} ${ampm}`;
+};
+
 export const formatDate1 = (date) => {
   if (!date) return "";
   const d = new Date(date);

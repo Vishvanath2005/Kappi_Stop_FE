@@ -23,7 +23,8 @@ const Store_Management = () => {
   const fetchStores = async () => {
     try {
       const res = await axios.get(`${API}/store/getallstores`);
-      setStoreData(res.data.data);
+     const transform = res.data.data
+      setStoreData(transform.reverse());
     } catch (error) {
       console.error("Error fetching store data:", error);
     }
