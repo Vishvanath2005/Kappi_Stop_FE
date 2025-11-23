@@ -1,34 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Table from '../../../components/Table'
+import { Plus } from 'lucide-react';
+import axios from 'axios';
+import { API } from '../../../Host';
 
 const Roles_Settings = () => {
+  const [roles, setRoles] = useState([]); 
 
   const rolesColumns = [
-    { key: "name", label: "Name" },
-    { key: "role", label: "Roles" },
+    { key: "roleId", label: "Role Id" },
+    { key: "role_name", label: "Roles" },
     { key: "created_by", label: "Created By" },
   ];
 
-  const rolesData = [
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-    { name: "John", role: "Admin", created_by: "Super Admin" },
-  ];
 
+
+
+    const fetchRoles = async () => {
+      try {
+        const res = await axios.get(`${API}/role/getallroles`);
+              const transformedData = res.data.data.map((item) => ({
+                roleId:item.roleId,
+                role_name:item.role_name,
+                created_by:item.created_by || "Super Admin",
+              }));
+        
+        setRoles(transformedData);
+        console.log(roles);
+        
+      } catch (err) {
+        console.error("Error fetching roles:", err);
+      }
+    };
+    useEffect(()=>{
+      fetchRoles()
+    },[])
   return (
     <>
      <Table
         setting_title="Roles"
-        add_button={false}
+        add_button="Add Roles"
+        add_icon={<Plus size={21}/>}
         columns={rolesColumns}
-        data={rolesData}
+        data={roles}
         EditRoute="/settings/roles/edit_roles"
+        AddRole={true}
+        navigate_route='/settings/roles/add_roles'
       />
     </>
   )

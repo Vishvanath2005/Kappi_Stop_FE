@@ -25,6 +25,8 @@ const Table = ({
   EditModal = null,
   AddModal = null,
   AddCategoryModal = null,
+  AddRole=false,
+  navigate_route="",
   itemsPerPage = 9,
 }) => {
   const navigate = useNavigate();
@@ -128,7 +130,16 @@ const Table = ({
               onClick={() => setShowAdd(true)}
             />
           )}
-
+{AddRole && (
+            <Button
+              button_icon={add_icon}
+              button_name={add_button}
+              bgColor="bg-layout-text"
+              textColor="text-white"
+              paddingX="px-4"
+              onClick={() => navigate(navigate_route)}
+            />
+          )}
           {Export_Filter && (
             <>
               <Button

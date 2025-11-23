@@ -23,7 +23,7 @@ const schema = yup.object().shape({
   closing_time: yup.string().required("Closing time is required"),
    status: yup
       .string()
-      .oneOf(["Enable", "Disable"], "Invalid status")
+      .oneOf(["Active", "Disable"], "Invalid status")
       .required("Status is required"),
 });
 
@@ -129,8 +129,8 @@ const Add_Store = ({ onClose }) => {
                     placeholder="Select Status"
                     options={[
                       {
-                        value: "Enable",
-                        label: "Enable",
+                        value: "Active",
+                        label: "Active",
                       },
                       { value: "Disable", label: "Disable" },
                     ]}

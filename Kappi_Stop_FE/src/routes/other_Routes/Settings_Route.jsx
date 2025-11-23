@@ -4,6 +4,7 @@ import User_Settings from "../../pages/settings/user/User_Settings";
 import Edit_User_Settings from "../../pages/settings/user/Edit_User_Settings";
 import Roles_Settings from "../../pages/settings/roles/Roles_Settings";
 import Edit_Roles from "../../pages/settings/roles/Edit_Roles";
+import Add_Roles from "../../pages/settings/roles/Add_Roles";
 
 const Settings_Route = () => {
   return (
@@ -16,6 +17,7 @@ const Settings_Route = () => {
         <Route path="roles">
           <Route index element={<Roles_Settings />} />
           <Route path="edit_roles" element={<Edit_Roles />} />
+          <Route path="add_roles" element={<Add_Roles />} />
         </Route>
       </Route>
     </>

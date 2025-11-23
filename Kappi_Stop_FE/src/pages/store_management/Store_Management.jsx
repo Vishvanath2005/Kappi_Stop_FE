@@ -25,6 +25,8 @@ const Store_Management = () => {
       const res = await axios.get(`${API}/store/getallstores`);
      const transform = res.data.data
       setStoreData(transform.reverse());
+      console.log(storeData);
+      
     } catch (error) {
       console.error("Error fetching store data:", error);
     }
