@@ -22,7 +22,7 @@ const Roles_Settings = () => {
               const transformedData = res.data.data.map((item) => ({
                 roleId:item.roleId,
                 role_name:item.role_name,
-                created_by:item.created_by || "Super Admin",
+                created_by:item.created_by ,
               }));
         
         setRoles(transformedData);

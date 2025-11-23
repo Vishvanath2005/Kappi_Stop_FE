@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
 
 import Modal from "../../../components/Modal";
 import { InputField } from "../../../components/InputField";
+import { API } from "../../../Host";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
   phone: yup.string().required("Phone Number is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   role: yup.string().required("Role is required"),
+  store: yup.array().min(1, "Select at least one store"),
 });
 
 const Add_User_Settings = ({ onClose }) => {
+  const [stores, setStores] = useState([]);
+  const [roles, setRoles] = useState([]);
+
+  const myrole = localStorage.getItem("role");
+
   const {
     register,
     handleSubmit,
@@ -23,9 +31,43 @@ const Add_User_Settings = ({ onClose }) => {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch stores
+        const storeRes = await axios.get(`${API}/store/getallstores`);
+        setStores(storeRes.data.data || []);
+
+        // Fetch roles
+        const roleRes = await axios.get(`${API}/role/getallroles`);
+        setRoles(roleRes.data.data || []);
+      } catch (error) {
+        console.error("Error fetching stores/roles:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const onSubmit = async (data) => {
     try {
-      console.log("Form Data:", data);
+      const payload = {
+        member_name: data.name,
+        phone: data.phone,
+        email: data.email,
+        role: data.role,
+        store: data.store,
+        created_by: myrole, // array of store IDs
+      };
+
+      // sending role as query
+      const res = await axios.post(
+        `${API}/member/createmember?role=${myrole}`,
+        payload
+      );
+
+      console.log("Response:", res.data);
+
       reset();
       onClose();
     } catch (error) {
@@ -48,6 +90,7 @@ const Add_User_Settings = ({ onClose }) => {
                 register={register}
                 errors={errors}
               />
+
               <InputField
                 label="Phone Number"
                 name="phone"
@@ -55,6 +98,7 @@ const Add_User_Settings = ({ onClose }) => {
                 register={register}
                 errors={errors}
               />
+
               <InputField
                 label="Email ID"
                 name="email"
@@ -63,18 +107,32 @@ const Add_User_Settings = ({ onClose }) => {
                 errors={errors}
               />
 
+              {/* Dynamic Roles */}
               <InputField
-                label="User Role"
+                label=" Role"
                 name="role"
                 type="select"
                 register={register}
                 errors={errors}
                 placeholder="Select Role"
-                options={[
-                  { value: "admin", label: "Admin" },
-                  { value: "super_admin", label: "Super Admin" },
-                  { value: "staff", label: "Staff" },
-                ]}
+                options={roles.map((r) => ({
+                  value: r.role_name,
+                  label: r.role_name,
+                }))}
+              />
+
+              {/* Store Multi-Select */}
+              <InputField
+                label="Store"
+                name="store"
+                type="multiselect"
+                placeholder="Select Store"
+                options={stores.map((store) => ({
+                  value: store.storeId,
+                  label: store.storeId,
+                }))}
+                register={register}
+                errors={errors}
               />
             </div>
           </div>
@@ -87,6 +145,7 @@ const Add_User_Settings = ({ onClose }) => {
             >
               Cancel
             </button>
+
             <button
               type="submit"
               disabled={isSubmitting}

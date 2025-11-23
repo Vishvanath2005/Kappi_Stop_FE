@@ -9,6 +9,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login details:", LoginData);
+      localStorage.setItem("role", "Manager");
   };
 
   return (

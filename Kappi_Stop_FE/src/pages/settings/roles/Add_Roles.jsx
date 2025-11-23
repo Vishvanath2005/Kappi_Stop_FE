@@ -9,9 +9,8 @@ import { useNavigate } from "react-router-dom";
 const Add_Roles = () => {
   const { handleSubmit } = useForm();
   const navigate = useNavigate();
-
-  // State for role name input
   const [role_name, setRoleName] = useState("");
+  const myrole = localStorage.getItem("role");
 
   const settingsData = [
     "Dashboard",
@@ -26,7 +25,14 @@ const Add_Roles = () => {
     "Settings",
   ];
 
-  const permissionTypes = ["All", "View", "Create", "Edit", "Delete", "Download"];
+  const permissionTypes = [
+    "All",
+    "View",
+    "Create",
+    "Edit",
+    "Delete",
+    "Download",
+  ];
 
   const [checkedSettings, setCheckedSettings] = useState({});
 
@@ -82,7 +88,12 @@ const Add_Roles = () => {
 
       permissions[backendKey] = {
         tab_access:
-          perm.All || perm.View || perm.Create || perm.Edit || perm.Delete || perm.Download
+          perm.All ||
+          perm.View ||
+          perm.Create ||
+          perm.Edit ||
+          perm.Delete ||
+          perm.Download
             ? true
             : false,
         taboption: {
@@ -108,6 +119,7 @@ const Add_Roles = () => {
 
     const payload = {
       role_name: role_name,
+      created_by:myrole,
       permission: convertPermissions(),
     };
 
@@ -116,11 +128,9 @@ const Add_Roles = () => {
     try {
       const response = await axios.post(`${API}/role/createrole`, payload);
       console.log(response);
-      alert("Role created successfully!");
       navigate(-1);
     } catch (error) {
       console.error(error);
-      alert("Error creating role");
     }
   };
 
@@ -165,7 +175,9 @@ const Add_Roles = () => {
           <div className="col-span-4 text-lg font-semibold text-center pb-3 border-r">
             Settings
           </div>
-          <div className="col-span-8 text-lg font-semibold pl-10">Permissions</div>
+          <div className="col-span-8 text-lg font-semibold pl-10">
+            Permissions
+          </div>
         </div>
 
         {settingsData.map((setting, index) => (

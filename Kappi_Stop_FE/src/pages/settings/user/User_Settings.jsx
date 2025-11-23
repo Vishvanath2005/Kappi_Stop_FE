@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../../../components/Table";
 import { Plus } from "lucide-react";
 import Add_User_Settings from "./Add_User_Settings";
+import axios from "axios";
+import { API } from "../../../Host";
 
 const User_Settings = () => {
-  
+  const [member, setmember] = useState([]);
+
   const usersettingColumns = [
     { key: "name", label: "Name" },
     { key: "role", label: "Roles" },
@@ -14,81 +17,40 @@ const User_Settings = () => {
     { key: "created_by", label: "Created By" },
   ];
 
-  const usersettingData = [
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-    {
-      name: "John",
-      role: "Admin",
-      phone: "95684 79534",
-      email: "ahgdkaj@gmail.com",
-      status: "Active",
-      created_by: "Super Admin",
-    },
-  ];
+
+
+  const fetchMember = async () => {
+    try {
+      const res = await axios.get(`${API}/member/getallmembers`);
+      console.log(res);
+      
+      const transformedData = res.data.data.map((item) => ({
+        name:item.member_name,
+        role: item.role,
+        phone: item.phone,
+        email: item.email,
+        status: item.status,
+        created_by: item.created_by,
+      
+      }));
+      setmember(transformedData);
+      console.log(member);
+    } catch (err) {
+      console.error("Error fetching roles:", err);
+    }
+  };
+  useEffect(() => {
+    fetchMember();
+  }, []);
 
   return (
     <>
       <Table
-        setting_title="User"
-        add_button="Add User"
+        setting_title="Member"
+        add_button="Add Member"
         add_icon={<Plus size={18} />}
         columns={usersettingColumns}
-        data={usersettingData}
+        data={member}
         AddModal={Add_User_Settings}
         EditRoute="/settings/user/edit_user_setting"
       />

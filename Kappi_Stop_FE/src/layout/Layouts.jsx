@@ -74,7 +74,7 @@ const Layouts = () => {
       to: "/settings/user",
       nested: [
         {
-          title: "User",
+          title: "Members",
           icon: <RiUserAddLine size={23} />,
           to: "/settings/user",
         },
